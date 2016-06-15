@@ -137,10 +137,8 @@ class FacetWP_Facet_Alpha
 </style>
 <script>
 (function($) {
-    $(function() {
-        wp.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
-            FWP.facets[facet_name] = $this.find('.facetwp-alpha.selected').attr('data-id') || '';
-        });
+    wp.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
+        FWP.facets[facet_name] = $this.find('.facetwp-alpha.selected').attr('data-id') || '';
     });
 
     $(document).on('click', '.facetwp-alpha.available', function() {
