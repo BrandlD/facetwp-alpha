@@ -15,7 +15,7 @@ defined( 'ABSPATH' ) or exit;
  * FacetWP registration hook
  */
 function fwp_alpha_facet( $facet_types ) {
-    $facet_types['star_rating'] = new FacetWP_Facet_Alpha();
+    $facet_types['alpha'] = new FacetWP_Facet_Alpha();
     return $facet_types;
 }
 add_filter( 'facetwp_facet_types', 'fwp_alpha_facet' );
