@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Alpha
 Description: Alphabetical letter facet
-Version: 1.1
+Version: 1.1.1
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-alpha
@@ -169,7 +169,10 @@ class FacetWP_Facet_Alpha
         $parent = $(this).closest('.facetwp-facet');
         $parent.find('.facetwp-alpha').removeClass('selected');
         $(this).addClass('selected');
-        FWP.static_facet = $parent.attr('data-name');
+
+        if ('' !== $(this).attr('data-id')) {
+            FWP.static_facet = $parent.attr('data-name');
+        }
         FWP.refresh();
     });
 })(jQuery);
