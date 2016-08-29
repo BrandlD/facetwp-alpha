@@ -38,17 +38,15 @@ class FacetWP_Facet_Alpha
     function render( $params ) {
         global $wpdb;
 
-
         $output = '';
         $facet = $params['facet'];
         $selected_values = (array) $params['selected_values'];
         $where_clause = $params['where_clause'];
-        $where_clause = str_replace( 'post_id', 'ID', $where_clause );
 
         $sql = "
-        SELECT DISTINCT UPPER(LEFT(post_title, 1)) AS letter
-        FROM {$wpdb->posts}
-        WHERE 1 $where_clause
+        SELECT DISTINCT UPPER(LEFT(facet_display_value, 1)) AS letter
+        FROM {$wpdb->prefix}facetwp_index
+        WHERE facet_name = '{$facet['name']}' $where_clause
         ORDER BY letter";
         $results = $wpdb->get_col( $sql );
 
@@ -106,8 +104,8 @@ class FacetWP_Facet_Alpha
         }
 
         $sql = "
-        SELECT DISTINCT ID FROM {$wpdb->posts}
-        WHERE UPPER(SUBSTR(post_title, 1, 1)) = '$selected_values'";
+        SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
+        WHERE facet_name = '{$facet['name']}' AND UPPER(SUBSTR(facet_display_value, 1, 1)) = '$selected_values'";
         return $wpdb->get_col( $sql );
     }
 
@@ -120,14 +118,12 @@ class FacetWP_Facet_Alpha
 <script>
 (function($) {
     wp.hooks.addAction('facetwp/load/alpha', function($this, obj) {
+        $this.find('.facet-source').val(obj.source || 'post_title');
     });
 
     wp.hooks.addFilter('facetwp/save/alpha', function($this, obj) {
+        obj['source'] = $this.find('.facet-source').val();
         return obj;
-    });
-
-    wp.hooks.addAction('facetwp/change/alpha', function($this) {
-        $this.closest('.facetwp-facet').find('.name-source').hide();
     });
 })(jQuery);
 </script>
