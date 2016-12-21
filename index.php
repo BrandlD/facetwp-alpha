@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Alpha
 Description: Alphabetical letter facet
-Version: 1.2
+Version: 1.2.1
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-alpha
@@ -105,7 +105,7 @@ class FacetWP_Facet_Alpha
 
         $sql = "
         SELECT DISTINCT post_id FROM {$wpdb->prefix}facetwp_index
-        WHERE facet_name = '{$facet['name']}' AND UPPER(SUBSTR(facet_display_value, 1, 1)) = '$selected_values'";
+        WHERE facet_name = '{$facet['name']}' AND UPPER(SUBSTR(facet_display_value, 1, 1)) IN ('$selected_values')";
         return $wpdb->get_col( $sql );
     }
 
