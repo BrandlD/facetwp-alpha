@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Alpha
 Description: Alphabetical letter facet
-Version: 1.2.1
+Version: 1.2.2
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-alpha
@@ -121,7 +121,7 @@ class FacetWP_Facet_Alpha
         $this.find('.facet-source').val(obj.source || 'post_title');
     });
 
-    wp.hooks.addFilter('facetwp/save/alpha', function($this, obj) {
+    wp.hooks.addFilter('facetwp/save/alpha', function(obj, $this) {
         obj['source'] = $this.find('.facet-source').val();
         return obj;
     });
