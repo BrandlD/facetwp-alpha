@@ -164,10 +164,11 @@ class FacetWP_Facet_Alpha
     $(document).on('click', '.facetwp-alpha.available', function() {
         $parent = $(this).closest('.facetwp-facet');
         $parent.find('.facetwp-alpha').removeClass('selected');
+        var facet_name = $parent.attr('data-name');
         $(this).addClass('selected');
 
         if ('' !== $(this).attr('data-id')) {
-            FWP.static_facet = $parent.attr('data-name');
+            FWP.frozen_facets[facet_name] = 'soft';
         }
         FWP.refresh();
     });
