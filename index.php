@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Alpha
 Description: Alphabetical letter facet
-Version: 1.2.3
+Version: 1.2.4
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-alpha
@@ -11,14 +11,10 @@ GitHub URI: facetwp/facetwp-alpha
 defined( 'ABSPATH' ) or exit;
 
 
-/**
- * FacetWP registration hook
- */
-function fwp_alpha_facet( $facet_types ) {
+add_filter( 'facetwp_facet_types', function( $facet_types ) {
     $facet_types['alpha'] = new FacetWP_Facet_Alpha();
     return $facet_types;
-}
-add_filter( 'facetwp_facet_types', 'fwp_alpha_facet' );
+} );
 
 
 /**
