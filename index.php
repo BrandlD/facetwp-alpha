@@ -41,7 +41,28 @@ class FacetWP_Facet_Alpha
         $output = '';
         $facet = $params['facet'];
         $selected_values = (array) $params['selected_values'];
-        $where_clause = $params['where_clause'];
+
+        // Simulate "OR" mode (ignore this facet's selection)
+        if ( isset( FWP()->or_values ) && ( 1 < count( FWP()->or_values ) || ! isset( FWP()->or_values[ $facet['name'] ] ) ) ) {
+            $post_ids = array();
+            $or_values = FWP()->or_values; // Preserve the original
+            unset( $or_values[ $facet['name'] ] );
+
+            $counter = 0;
+            foreach ( $or_values as $name => $vals ) {
+                $post_ids = ( 0 == $counter ) ? $vals : array_intersect( $post_ids, $vals );
+                $counter++;
+            }
+
+            // Return only applicable results
+            $post_ids = array_intersect( $post_ids, FWP()->unfiltered_post_ids );
+        }
+        else {
+            $post_ids = FWP()->unfiltered_post_ids;
+        }
+
+        $post_ids = empty( $post_ids ) ? array( 0 ) : $post_ids;
+        $where_clause = ' AND post_id IN (' . implode( ',', $post_ids ) . ')';
 
         $sql = "
         SELECT DISTINCT UPPER(LEFT(facet_display_value, 1)) AS letter
@@ -50,6 +71,7 @@ class FacetWP_Facet_Alpha
         ORDER BY letter";
         $results = $wpdb->get_col( $sql );
 
+        // Remove accents
         if ( ! empty( $results ) ) {
             $results = array_map( 'remove_accents', $results );
             $results = array_unique( $results );
@@ -162,8 +184,10 @@ class FacetWP_Facet_Alpha
 </style>
 <script>
 (function($) {
-    wp.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
-        FWP.facets[facet_name] = $this.find('.facetwp-alpha.selected').attr('data-id') || '';
+    $(function() {
+        wp.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
+            FWP.facets[facet_name] = $this.find('.facetwp-alpha.selected').attr('data-id') || '';
+        });
     });
 
     $(document).on('click', '.facetwp-alpha.available', function() {
