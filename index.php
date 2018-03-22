@@ -50,6 +50,11 @@ class FacetWP_Facet_Alpha
         ORDER BY letter";
         $results = $wpdb->get_col( $sql );
 
+        if ( ! empty( $results ) ) {
+            $results = array_map( 'remove_accents', $results );
+            $results = array_unique( $results );
+        }
+
         $available_chars = array( '#', 'A', 'B', 'C', 'D', 'E', 'F', 'G',
             'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' );
