@@ -2,7 +2,7 @@
 /*
 Plugin Name: FacetWP - Alpha
 Description: Filter by first letter
-Version: 1.2.4
+Version: 1.3.0
 Author: FacetWP, LLC
 Author URI: https://facetwp.com/
 GitHub URI: facetwp/facetwp-alpha
