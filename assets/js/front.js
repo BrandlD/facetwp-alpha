@@ -1,6 +1,6 @@
 (function($) {
     $(function() {
-        wp.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
+        FWP.hooks.addAction('facetwp/refresh/alpha', function($this, facet_name) {
             FWP.facets[facet_name] = $this.find('.facetwp-alpha.selected').attr('data-id') || '';
         });
     });
