@@ -57,7 +57,7 @@ class FacetWP_Facet_Alpha_Addon extends FacetWP_Facet
             'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R',
             'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' );
 
-        $output .= '<span class="facetwp-alpha available" data-id="">' . __( 'Any', 'fwp' ) . '</span>';
+        $output .= '<span class="facetwp-alpha available" data-id="">' . __( 'Any', 'fwp-front' ) . '</span>';
 
         foreach ( $available_chars as $char ) {
             $match = false;
